@@ -1,8 +1,6 @@
 # Superset
 
-Docker image for [AirBnB's Superset](https://github.com/airbnb/superset).
-
-*Formerly [Caravel](https://github.com/amancevice/caravel)*
+Docker image for [AirBnB's Superset](https://github.com/fineartdev/superset).
 
 
 ## Examples
@@ -12,7 +10,7 @@ Navigate to the [`examples`](./examples) directory to view examples of how to co
 
 ## Versions
 
-This repo is tagged in parallel with superset. Pulling `amancevice/superset:0.17.3` will fetch the image of this repository running superset version `0.17.3`. It is possible that the `latest` tag includes new features/support libraries but will usually be in sync with the latest semantic version.
+This repo is tagged in parallel with superset. Pulling `fineart/superset:latest` will fetch the image of this repository running superset version `latest`. It is possible that the `latest` tag includes new features/support libraries but will usually be in sync with the latest semantic version.
 
 
 ## Configuration
@@ -27,24 +25,24 @@ View the contents of the [`examples`](./examples) directory to see some simple `
 After starting the Superset server, initialize the database with an admin user and Superset tables using the `superset-init` helper script:
 
 ```bash
-docker run --detach --name superset [options] amancevice/superset
+docker run --detach --name superset [options] fineart/superset
 docker exec -it superset superset-init
 ```
 
 
 ## Upgrading
 
-Upgrading to a newer version of superset can be accomplished by re-pulling `amancevice/superset`at a specified superset version or `latest` (see above for more on this). Remove the old container and re-deploy, making sure to use the correct environmental configuration. Finally, ensure the superset database is migrated up to the head:
+Upgrading to a newer version of superset can be accomplished by re-pulling `fineart/superset`at a specified superset version or `latest` (see above for more on this). Remove the old container and re-deploy, making sure to use the correct environmental configuration. Finally, ensure the superset database is migrated up to the head:
 
 ```bash
 # Pull desired version
-docker pull amancevice/superset
+docker pull fineart/superset
 
 # Remove the current container
 docker rm -f superset-old
 
 # Deploy a new container ...
-docker run --detach --name superset-new [options] amancevice/superset
+docker run --detach --name superset-new [options] fineart/superset
 
 # Upgrade the DB
 docker exec superset-new superset db upgrade
