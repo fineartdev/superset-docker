@@ -11,14 +11,14 @@ ENV LANG=C.UTF-8 \
     SUPERSET_VERSION=${SUPERSET_VERSION}
 
 # Install dependencies & create superset user
-RUN apt-get update && \
-    apt-get install -y \
-        build-essential \
-        libsasl2-dev \
-        libldap2-dev \
-        mariadb-client \
-        postgresql-client && \
-    pip install \
+RUN apk add --no-cache \
+        curl \
+        cyrus-sasl-dev \
+        libffi-dev \
+        mariadb-dev \
+        openldap-dev\
+        postgresql-dev && \
+    pip3 install \
         flask-mail==0.9.1 \
         flask-oauth==0.12 \
         flask_oauthlib==0.9.3 \
@@ -31,7 +31,8 @@ RUN apt-get update && \
         sqlalchemy-redshift==0.5.0 \
         sqlalchemy-clickhouse==0.1.1.post3 \
         fineart-superset==$SUPERSET_VERSION && \
-    useradd -b /home -U -m superset && \
+    addgroup superset && \
+    adduser -h /home/superset -G superset -D superset && \
     mkdir /home/superset/.superset && \
     touch /home/superset/.superset/superset.db && \
     chown -R superset:superset /home/superset
@@ -46,4 +47,4 @@ EXPOSE 8088
 HEALTHCHECK CMD ["curl", "-f", "http://localhost:8088/health"]
 ENTRYPOINT ["superset"]
 CMD ["runserver"]
-USER superset
+USER superset                                                                                                                                                                                
